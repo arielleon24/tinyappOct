@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/arielleon24/tinyappOct/issues"
   },
-  "homepage": "https://github.com/arielleon24/tinyappOct#readme"
+  "homepage": "https://github.com/arielleon24/tinyappOct#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
