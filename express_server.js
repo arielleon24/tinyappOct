@@ -38,8 +38,15 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  const templateVars = {shortURL: req.params.shortURL, longURL: req.params.longURL}
+  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]}
+  console.log("url Database:", urlDatabase)
+  console.log(templateVars.shortURL)
   res.render('urls_show', templateVars)
+});
+
+app.get("/u/:shortURL", (req, res) => {
+  const longURL = urlDatabase[req.params.shortURL]
+  res.redirect(longURL);
 });
 
 app.get("/hello",(req, res) => {
@@ -54,7 +61,10 @@ app.get("/hello",(req, res) => {
 
 app.post("/urls", (req, res) => {
   console.log(req.body); // req.body is the object with LongURL key and the website value
-  res.send("Ok!")
+  short = generateRandomString()
+  urlDatabase[short] = req.body.longURL;
+  console.log(urlDatabase) 
+  res.redirect(`/urls/${short}`)
 })
 
 
