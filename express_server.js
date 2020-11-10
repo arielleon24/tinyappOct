@@ -67,6 +67,21 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${short}`)
 })
 
+app.post("/urls/:shortURL/delete", (req, res) => {
+  shortURL = req.params.shortURL /// req.params 
+  console.log(shortURL)
+  delete urlDatabase[shortURL];
+  res.redirect("/urls")
+})
+
+app.post("/urls/:shortURL/update", (req, res) => {
+  shortURL = req.params.shortURL /// req.params 
+  console.log("Before:",urlDatabase)
+  urlDatabase[shortURL] = req.body.updateURL
+  console.log("After:",urlDatabase) // database updated with new URL
+  res.redirect("/urls")
+})
+
 
 
 app.listen(PORT, () => {
