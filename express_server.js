@@ -101,7 +101,7 @@ app.post("/login", (req, res) => {
 })
 
 app.post("/logout", (req, res) => {
-  res.clearCookie("username")
+  res.clearCookie("username") /// res.cookies can erase a cooking by refering only to it's name
   console.log(req.cookies.username)
   res.redirect("/urls")
 })
