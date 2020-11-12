@@ -7,18 +7,20 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
         
         
       </div>
       <% if(user){ %>
+        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
         <div class="d-flex justify-content-end">
           <form class="form-inline" action="/logout"method="POST">
             Logged in as: <%=user.email%>
               <button type="submit" class="btn btn-success">logout</button>
+              </form>
     </div>
     <% } else { %>
       <div class ="d-flex justify-content-end">
+      <a class="nav-item nav-link" href="/login">Create New URL</a>
       <a class="nav-item nav-link" href="/login">Login</a>
       <a class="nav-item nav-link" href="/register">Register</a>
       </div>
