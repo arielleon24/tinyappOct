@@ -11,6 +11,7 @@
 <body>
   <%- include('partials/_header') %> 
   <main style="margin: 1em;">
+    <% if(user) { %>
     <h3>My URLs</h3>
     <table class="table">
       <thead>
@@ -21,6 +22,13 @@
           <th scope="col">Delete</th>
         </tr>
       </thead>
+      <% } else { %>
+
+        <h4 style="color:red">To create and access shortened URLs please</h4>
+        <p><a href="/login">login</a></p>
+        <p><a href="/register">Register</a></p>
+
+        <% } %>
       <tbody>
         <% for(let url in urls) { %>
           <tr>
