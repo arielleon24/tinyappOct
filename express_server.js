@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bcrypt = require('bcrypt');
 const PORT = 8080; // default port 8080
+const {getUserByEmail, generateRandomString, urlsForUser} = require("./helper")
 
 // Cookie parser
 const cookieSession = require('cookie-session')
@@ -19,17 +20,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // sets EJS as the viewing engine
 app.set("view engine", "ejs");
 
-//function to check whether email is in Database
-const emailInDb = (db, emailToCheck) => {
-for (let user in db) {
-  if(db[user].email === emailToCheck) {
-    
-    return true;
-  }
-} return false;
-};
-
-///function to check whether the login info is correct 
 const checkLoginInfo = (db, userObj) => {
   for (let user in db) {
     if(db[user].email === userObj.email){
@@ -41,22 +31,6 @@ const checkLoginInfo = (db, userObj) => {
   return false;
 };
 
-const urlsForUser = (db, userid) => {
-  const resultDB = {};
-  for (let items in db) {
-    if (db[items].userID === userid) {
-      resultDB[items] = {
-        longURL: db[items].longURL,
-        userID: db[items].userID
-      }
-    }
-  }
-  return resultDB;
-}
-
-
-
-/// function to check and add to database
 
 const urlDatabase = {
   "b2xVn2": { longURL:"http://www.lighthouselabs.ca", userID: "userRandomID"},
@@ -77,12 +51,11 @@ const userDatabase = {
   }
 };
 
-const generateRandomString = function (length = 6) {
-  return Math.random().toString(20).substr(2, length);
-};
+
 
 // GET Request ------------
 
+console.log(getUserByEmail(userDatabase, userDatabase.user2RandomID.email))
 
 app.get("/error404", (req, res) => {
   res.render("error404");
@@ -209,7 +182,7 @@ app.post("/register", (req, res) => {
   if (!req.body.email || !req.body.password) {
     res.send("400 Status code - Email or password missing");
   };
-  if (emailInDb(userDatabase, req.body.email)) {
+  if (getUserByEmail(userDatabase, req.body.email)) {
     res.status(404).redirect("/error404");
   } else {
       userDatabase[id] =  {
