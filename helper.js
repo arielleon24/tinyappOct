@@ -1,12 +1,12 @@
 //function to check whether email is in Database
 const getUserByEmail = (db, emailToCheck) => {
   for (let user in db) {
-    if(db[user].email === emailToCheck) {
-      
+    if (db[user].email === emailToCheck) {
       return user;
     }
-  } return false;
-  };
+  }
+  return undefined;
+};
 
 const urlsForUser = (db, userid) => {
   const resultDB = {};
@@ -14,15 +14,15 @@ const urlsForUser = (db, userid) => {
     if (db[items].userID === userid) {
       resultDB[items] = {
         longURL: db[items].longURL,
-        userID: db[items].userID
-      }
+        userID: db[items].userID,
+      };
     }
   }
   return resultDB;
-}
+};
 
-const generateRandomString = function (length = 6) {
+const generateRandomString = function(length = 6) {
   return Math.random().toString(20).substr(2, length);
 };
 
-module.exports = {getUserByEmail, generateRandomString, urlsForUser}
+module.exports = { getUserByEmail, generateRandomString, urlsForUser };
