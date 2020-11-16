@@ -126,6 +126,11 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new", templateVars);
 });
 
+/// JSON PAGE (not sure if we are supposed to keep it)
+app.get("/urls.json", (req, res) => {
+  res.json(urlDatabase);
+});
+
 /// URLS IDs (SHOW) ROUTES
 
 app.get("/urls/:shortURL", (req, res) => {
@@ -179,10 +184,6 @@ app.get("/wrongLogin", (req, res) => {
   const user_id = req.session.user_id;
   const templateVars = { urls: urlDatabase, user: user_id };
   res.render("wrongLogin", templateVars);
-});
-
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
 });
 
 ////LISTENING ----------------------------
