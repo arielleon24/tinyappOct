@@ -6,19 +6,8 @@ const {
   getUserByEmail,
   generateRandomString,
   urlsForUser,
+  checkLoginInfo,
 } = require("./helper");
-
-
-const checkLoginInfo = (db, userObj) => {
-  for (let user in db) {
-    if (db[user].email === userObj.email) {
-      if (bcrypt.compareSync(userObj.password, db[user].password)) {
-        return db[user].id;
-      }
-    }
-  }
-  return false;
-};
 
 // Cookie parser
 const cookieSession = require("cookie-session");
