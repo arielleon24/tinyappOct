@@ -73,7 +73,6 @@ app.post("/register", (req, res) => {
 /// LOGIN ROUTES
 
 app.get("/login", (req, res) => {
-  console.log("RUNNING")
   const user_id = req.session.user_id;
   if(user_id) {
     res.redirect("/urls")
@@ -130,8 +129,6 @@ app.get("/urls/new", (req, res) => {
 /// URLS IDs (SHOW) ROUTES
 
 app.get("/urls/:shortURL", (req, res) => {
-  console.log(req.session.user_id)
-  console.log(urlDatabase[req.params.shortURL].userID)
   if(req.session.user_id === urlDatabase[req.params.shortURL].userID) {
     const user = userDatabase[req.session.user_id];
     const templateVars = {
@@ -145,8 +142,6 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 
 app.post("/urls/:shortURL", (req, res) => {
-  console.log(req.session.user_id)
-  console.log(urlDatabase[req.params.shortURL].userID)
   if(req.session.user_id === urlDatabase[req.params.shortURL].userID) {
     const shortURL = req.params.shortURL; /// req.params
     urlDatabase[shortURL].longURL = req.body.updateURL;
