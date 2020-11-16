@@ -1,3 +1,4 @@
+
 //function to check whether email is in Database
 const getUserByEmail = (db, emailToCheck) => {
   for (let user in db) {
@@ -25,4 +26,6 @@ const generateRandomString = function(length = 6) {
   return Math.random().toString(20).substr(2, length);
 };
 
-module.exports = { getUserByEmail, generateRandomString, urlsForUser };
+
+
+module.exports = { getUserByEmail, generateRandomString, urlsForUser};

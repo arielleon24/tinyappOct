@@ -4,21 +4,10 @@ const bcrypt = require("bcrypt");
 const PORT = 8080; // default port 8080
 const {
   getUserByEmail,
+  checkLoginInfo,
   generateRandomString,
   urlsForUser,
 } = require("./helper");
-
-
-const checkLoginInfo = (db, userObj) => {
-  for (let user in db) {
-    if (db[user].email === userObj.email) {
-      if (bcrypt.compareSync(userObj.password, db[user].password)) {
-        return db[user].id;
-      }
-    }
-  }
-  return false;
-};
 
 // Cookie parser
 const cookieSession = require("cookie-session");
@@ -84,7 +73,6 @@ app.post("/register", (req, res) => {
 /// LOGIN ROUTES
 
 app.get("/login", (req, res) => {
-  console.log("RUNNING")
   const user_id = req.session.user_id;
   if(user_id) {
     res.redirect("/urls")
@@ -141,18 +129,13 @@ app.get("/urls/new", (req, res) => {
 /// URLS IDs (SHOW) ROUTES
 
 app.get("/urls/:shortURL", (req, res) => {
-  console.log(req.session.user_id)
-  console.log(urlDatabase[req.params.shortURL].userID)
-  if(req.session.user_id === urlDatabase[req.params.shortURL].userID) {
-    const user = userDatabase[req.session.user_id];
-    const templateVars = {
-      shortURL: req.params.shortURL,
-      longURL: urlDatabase[req.params.shortURL].longURL,
-      user: user,
-    };
-    res.render("urls_show", templateVars);
-  }
-  res.render("notYourUrl");
+  const user = userDatabase[req.session.user_id];
+  const templateVars = {
+    shortURL: req.params.shortURL,
+    longURL: urlDatabase[req.params.shortURL].longURL,
+    user: user,
+  };
+  res.render("urls_show", templateVars);
 });
 
 app.post("/urls/:shortURL", (req, res) => {
@@ -186,7 +169,7 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 
-// ERROR HANDLING ROUTES
+// EROOR HANDLING ROUTES
 
 app.get("/error404", (req, res) => {
   res.render("error404");
